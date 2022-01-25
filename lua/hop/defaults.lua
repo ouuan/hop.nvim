@@ -12,5 +12,6 @@ M.current_line_only = false
 M.inclusive_jump = false
 M.uppercase_labels = false
 M.offsets = {column=0}
+M.multi_windows = false
 
 return M
