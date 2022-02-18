@@ -227,18 +227,29 @@ For a more complete user guide and help pages:
 
 Hop doesn’t set any keybindings; you will have to define them by yourself.
 
-If you want to create a key binding from within Lua:
+Example config for current-line-only one-directional `HopChar1`:
 
 ```lua
--- place this in one of your configuration file(s)
 vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
 vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('o', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+vim.api.nvim_set_keymap('o', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, offsets_after = 1 })<cr>", {})
 vim.api.nvim_set_keymap('o', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
 vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
 vim.api.nvim_set_keymap('v', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, offsets = {column=-1} })<cr>", {})
-vim.api.nvim_set_keymap('', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, offsets = {column=1} })<cr>", {})
+vim.api.nvim_set_keymap('o', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+vim.api.nvim_set_keymap('o', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, offsets_before = 1 })<cr>", {})
+vim.api.nvim_set_keymap('v', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, offsets_after = -1 })<cr>", {})
+vim.api.nvim_set_keymap('v', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, offsets_before = 1 })<cr>", {})
+```
+
+Example config for bidirectional all-line `HopChar1`:
+
+```lua
+vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1()<cr>", {})
+vim.api.nvim_set_keymap('o', 'f', "<cmd>lua require'hop'.hint_char1({ offsets_after = 1 })<cr>", {})
+vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_char1()<cr>", {})
+vim.api.nvim_set_keymap('o', 't', "<cmd>lua require'hop'.hint_char1({ offsets_before = 1 })<cr>", {})
+vim.api.nvim_set_keymap('v', 't', "<cmd>lua require'hop'.hint_char1({ offsets_after = -1, offsets_before = 1 })<cr>", {})
 ```
 
 # Configuration

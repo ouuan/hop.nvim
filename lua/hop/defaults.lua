@@ -11,7 +11,8 @@ M.create_hl_autocmd = true
 M.current_line_only = false
 M.inclusive_jump = false
 M.uppercase_labels = false
-M.offsets = {column=0}
+M.offsets_after = 0
+M.offsets_before = 0
 M.multi_windows = false
 
 return M

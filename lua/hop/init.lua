@@ -119,14 +119,15 @@ end
 -- Add option to shift cursor by column offset
 --
 -- This function will update the jump list.
-function M.move_cursor_to(w, line, column, offsets)
-  column = column + offsets.column
-  local buf_line = vim.api.nvim_buf_get_lines(vim.api.nvim_win_get_buf(w), line - 1, line, false)[1]
-
-  -- If it is pending for operator shift column to the right by 1
-  if vim.api.nvim_get_mode().mode == 'no' then
-    column = column + 1
+function M.move_cursor_to(w, line, column, offsets_after, offsets_before)
+  local current_line, current_column = unpack(vim.api.nvim_win_get_cursor(w))
+  if line > current_line or (line == current_line and column >= current_column) then
+    column = column + offsets_after
+  else
+    column = column + offsets_before
   end
+
+  local buf_line = vim.api.nvim_buf_get_lines(vim.api.nvim_win_get_buf(w), line - 1, line, false)[1]
 
   column = vim.fn.byteidx(buf_line, column)
 
@@ -142,7 +143,7 @@ function M.hint_with(jump_target_gtr, opts)
   end
 
   M.hint_with_callback(jump_target_gtr, opts, function(jt)
-    M.move_cursor_to(jt.window, jt.line + 1, jt.column - 1, opts.offsets)
+    M.move_cursor_to(jt.window, jt.line + 1, jt.column - 1, opts.offsets_after, opts.offsets_before)
   end)
 end
 

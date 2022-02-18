@@ -690,15 +690,17 @@ below.
     Defaults:~
         `direction = nil`
 
-`offsets.column`                                            *hop-config-offsets*
-    If it is non-zero, the cursor will be offset horizontally
-    fron the selected jump position by `offsets.column` character/s
-    once the jump is complete.
+`offsets_after`                                         *hop-config-offsets_after*
+`offsets_before`                                       *hop-config-offsets_before*
+    The cursor will be offset horizontally from the selected jump position by
+    `offsets_after` or `offsets_before` character(s) depending on whether the jump
+    position is after or before the cursor once the jump is complete.
     It can used to emulating the left-right motion commands |t| and |T| from vim 
     where the cursor is positioned on/before the target position.
 
     Defaults:~
-        `offsets.column = 0`
+        `offsets_after = 0`
+        `offsets_before = 0`
 
 `current_line_only`                                 *hop-config-current_line_only*
     Apply Hop commands only to the current line.
