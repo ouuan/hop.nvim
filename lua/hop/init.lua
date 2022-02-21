@@ -122,18 +122,21 @@ end
 --
 -- This function will update the jump list.
 function M.move_cursor_to(w, line, column, inclusive)
-  -- If we do not ask for inclusive jump, we don’t have to retreive any additional lines because we will jump to the
-  -- actual jump target. If we do want an inclusive jump, we need to retreive the line the jump target lies in so that
-  -- we can compute the offset correctly. This is linked to the fact that currently, Neovim doesn’s have an API to «
-  -- offset something by 1 visual column. »
-  if inclusive then
-    local buf_line = vim.api.nvim_buf_get_lines(vim.api.nvim_win_get_buf(w), line - 1, line, false)[1]
-    column = vim.fn.byteidx(buf_line, column + 1)
+  if not inclusive then
+    local current_line, current_column = unpack(vim.api.nvim_win_get_cursor(w))
+    if line > current_line or (line == current_line and column >= current_column) then
+      column = column - 1
+    else
+      column = column + 1
+    end
   end
 
   -- update the jump list
   vim.cmd("normal! m'")
   vim.api.nvim_set_current_win(w)
+  if vim.startswith(vim.api.nvim_get_mode().mode, 'no') then
+    vim.cmd("normal! v")
+  end
   vim.api.nvim_win_set_cursor(w, { line, column})
 end
 
